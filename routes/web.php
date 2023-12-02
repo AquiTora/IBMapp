@@ -18,4 +18,14 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+// Показывает все продукты
 Route::get('/', [ProductsController::class, 'index']);
+
+// Показать форму заявки
+Route::get('/order/{product}', [ProductsController::class, 'order']);
+
+
+// тестовые роуты для импорта csv
+Route::get('/importForm', [ProductsController::class, 'importForm']);
+
+Route::post('/', [ProductsController::class, 'import']);
