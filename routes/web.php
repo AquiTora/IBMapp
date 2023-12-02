@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,13 @@ Route::get('/welcome', function () {
 Route::get('/', [ProductsController::class, 'index']);
 
 // Показать форму заявки
-Route::get('/order/{product}', [ProductsController::class, 'order']);
+Route::get('/order/{product}', [OrdersController::class, 'create']);
 
+// Создать новую заявку
+Route::post('/user/{product}', [OrdersController::class, 'store']);
 
-// тестовые роуты для импорта csv
+// Форма для импорта csv
 Route::get('/importForm', [ProductsController::class, 'importForm']);
 
-Route::post('/', [ProductsController::class, 'import']);
+// Импорт csv
+Route::post('/import', [ProductsController::class, 'import']);

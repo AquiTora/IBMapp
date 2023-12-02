@@ -1,7 +1,7 @@
 <x-layout>
-    <h1>Заявка на покупку {{$product->name}}</h1>
+    <h1>Заявка на покупку {{$product->name}}, {{$product->id}}</h1>
 
-    <form method="POST" action='/' enctype="multipart/form-data">
+    <form method="POST" action='/user/{{$product->id}}' enctype="multipart/form-data">
         @csrf
         <div>
             <label for="name">
@@ -24,10 +24,10 @@
             </label>
             <input 
                 type="tel"
-                name="phone"
+                name="phon"
             />
 
-            @error('phone')
+            @error('phon')
                 <p>{{$message}}</p>
             @enderror
         </div>

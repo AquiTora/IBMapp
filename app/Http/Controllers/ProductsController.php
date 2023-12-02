@@ -16,14 +16,6 @@ class ProductsController extends Controller
                 ->get()
         ]);
     }
-
-    // Показать форму заявки 
-    public function order(Products $product)
-    {
-        return view('products.order', [
-            'product' => $product
-        ]);
-    }
     
     // Показывает форму для загрузки файла csv
     public function importForm()
