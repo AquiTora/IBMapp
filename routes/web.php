@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,14 +24,32 @@ Route::get('/welcome', function () {
 // Показывает все продукты
 Route::get('/', [ProductsController::class, 'index']);
 
+// Форма для импорта csv
+Route::get('/importForm', [ProductsController::class, 'importForm']);
+
+// Импорт csv
+Route::post('/import', [ProductsController::class, 'import']);
+
 // Показать форму заявки
 Route::get('/order/{product}', [OrdersController::class, 'create']);
 
 // Создать новую заявку
 Route::post('/user/{product}', [OrdersController::class, 'store']);
 
-// Форма для импорта csv
-Route::get('/importForm', [ProductsController::class, 'importForm']);
+// Показать список заявок
+Route::get('/showOrder', [OrdersController::class, 'showOrder']);
 
-// Импорт csv
-Route::post('/import', [ProductsController::class, 'import']);
+// Форма для регистрации нового работника
+Route::get('/create', [UserController::class, 'create']);
+
+// Регистрация и вход нового работника
+Route::post('/users', [UserController::class, 'store']);
+
+// Выход из акаунта работника
+Route::post('/logout', [UserController::class, 'logout']);
+
+// Форма авторизации работника
+Route::get('/login', [UserController::class, 'login']);
+
+// Авторизация работника
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
