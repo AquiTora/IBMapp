@@ -23,6 +23,17 @@
                     Оставить заявку на покупку
                 </a>
             </div>
+
+            @auth
+                <form method="POST" action="/{{$product->id}}">
+                    @csrf
+                    @method('DELETE')
+                    <button class="text-red-500">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </form>
+            @endauth
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -15,6 +16,38 @@ class ProductsController extends Controller
                 ->filter(request(['category']))
                 ->get()
         ]);
+    }
+
+    // Показать меню добавления товара
+    public function add()
+    {
+        return view('products.add');
+    }
+
+    // Добавление товара
+    public function addProd(Request $request)
+    {
+        $formFields = $request->validate([
+            'article' => 'required',
+            'name' => 'required',
+            'discription' => 'required',
+            'category' => 'required',
+            'price' => 'required'
+        ]);
+
+        Products::create($formFields);
+
+        return redirect('/')->with('message', 'Товар успешно добавлен!');
+    }
+
+    // Удаление товара
+    public function destroy(Request $request)
+    {
+        $deleteItem = $request->product;
+
+        DB::table('products')->where('id', '=', $deleteItem)->delete();
+
+        return redirect('/')->with('message', 'Товар успешно удален!');
     }
     
     // Показывает форму для загрузки файла csv

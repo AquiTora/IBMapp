@@ -40,9 +40,9 @@
                     </span>
                 </li>
                 <li>
-                    <a href="listings/manage" class="hover:text-laravel">
+                    <a href="/add" class="hover:text-laravel">
                         <i class="fa-solid fa-gear"></i>
-                        Управление каталогом
+                        Добавить новый товар
                     </a>
                 </li>
                 <li>

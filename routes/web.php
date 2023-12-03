@@ -25,7 +25,13 @@ Route::get('/welcome', function () {
 Route::get('/', [ProductsController::class, 'index']);
 
 // Меню редактирования товаров
-Route::get('/redact', [ProductsController::class, 'redact']);
+Route::get('/add', [ProductsController::class, 'add']);
+
+// Добавление товара
+Route::post('/addProd', [ProductsController::class, 'addProd']);
+
+// Удаление товара
+Route::delete('/{product}', [ProductsController::class, 'destroy']);
 
 // Форма для импорта csv
 Route::get('/importForm', [ProductsController::class, 'importForm']);
