@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/create" class="hover:text-laravel">
+                    <a href="/showOrder" class="hover:text-laravel">
                         <i class="fa-solid fa-user-plus"></i> 
                         Просмотр заявок
                     </a>
