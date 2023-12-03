@@ -18,17 +18,13 @@ class OrdersController extends Controller
 
     public function store(Request $request, Products $product)
     {
-        // dd($product->id);
-        // dd($request);
         $formFields = $request->validate([
             'name' => 'required',
-            'phon' => 'required',   //Надо будет исправить
+            'phone' => 'required',
             'email' => 'required',
         ]);
 
         $formFields['product_id'] = $product->id;
-
-        // dd($formFields);
 
         Orders::create($formFields);
 

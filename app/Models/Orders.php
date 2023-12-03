@@ -11,5 +11,5 @@ class Orders extends Model
 
     use HasFactory;
 
-    protected $fillable = ['name', 'phon', 'email', 'product_id'];
+    protected $fillable = ['name', 'phone', 'email', 'product_id'];
 }

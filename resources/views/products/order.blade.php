@@ -19,15 +19,15 @@
         </div>
 
         <div>
-            <label for="phon">
+            <label for="phone">
                 Номер телефона
             </label>
             <input 
                 type="tel"
-                name="phon"
+                name="phone"
             />
 
-            @error('phon')
+            @error('phone')
                 <p>{{$message}}</p>
             @enderror
         </div>
