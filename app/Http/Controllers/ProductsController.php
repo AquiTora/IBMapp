@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class ProductsController extends Controller
 {
@@ -77,5 +78,34 @@ class ProductsController extends Controller
         }
 
         return redirect('/')->with('success', 'CSV file imported successfully.');
+    }
+
+    // Показать форму для экспорта CSV
+    public function exportForm()
+    {
+        return view('export');
+    }
+
+    // Экспорт CSV
+    public function export()
+    {
+        $products = Products::all();
+        $csvFileName = 'products.xml';
+        $headers = [
+            'Content-Type' => 'text/xml',
+            'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        ];
+
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, ['article', 'name', 'discription', 'categoty', 'price']);
+
+        foreach ($products as $product)
+        {
+            fputcsv($handle, [$product->article, $product->name, $product->discription, $product->category, $product->price]);
+        }
+
+        fclose($handle);
+
+        return Response::make('', 200, $headers);
     }
 }

@@ -39,6 +39,12 @@ Route::get('/importForm', [ProductsController::class, 'importForm']);
 // Импорт csv
 Route::post('/import', [ProductsController::class, 'import']);
 
+// Форма для экспорта CSV
+Route::get('/exportForm', [ProductsController::class, 'exportForm']);
+
+// Экспорт CSV
+Route::get('/export', [ProductsController::class, 'export']);
+
 // Показать форму заявки
 Route::get('/order/{product}', [OrdersController::class, 'create']);
 
