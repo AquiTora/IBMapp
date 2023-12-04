@@ -90,9 +90,9 @@ class ProductsController extends Controller
     public function export()
     {
         $products = Products::all();
-        $csvFileName = 'products.xml';
+        $csvFileName = 'products.csv';
         $headers = [
-            'Content-Type' => 'text/xml',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
         ];
 
