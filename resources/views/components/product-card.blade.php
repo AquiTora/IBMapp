@@ -6,7 +6,7 @@
             <h2>
                 Название: {{$product->name}}
             </h2>
-            <x-product-cat :category="$product->category" />
+            <x-product-cat :categorysCsv="$product->category" />
             <div>
                 Артикул: {{$product->article}}
             </div>
@@ -33,6 +33,11 @@
                         Delete
                     </button>
                 </form>
+                <div>
+                    <a href='/category/{{$product->id}}/edit'>
+                        Редактировать категории
+                    </a>
+                </div>
             @endauth
         </div>
     </div>

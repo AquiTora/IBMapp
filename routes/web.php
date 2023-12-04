@@ -33,6 +33,12 @@ Route::post('/addProd', [ProductsController::class, 'addProd']);
 // Удаление товара
 Route::delete('/{product}', [ProductsController::class, 'destroy']);
 
+// Форма редактирования категорий
+Route::get('/category/{products}/edit', [ProductsController::class, 'category']);
+
+// Изменение категорий
+Route::put('/category/{products}', [ProductsController::class, 'change']);
+
 // Форма для импорта csv
 Route::get('/importForm', [ProductsController::class, 'importForm']);
 

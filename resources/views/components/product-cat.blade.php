@@ -1,8 +1,22 @@
-@props(['category'])
+@props(['categorysCsv'])
 
-<a 
-    class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
-    href='/?category={{$category}}'
->
-    {{$category}}
-</a>
+@php
+    $categorys = explode(',', $categorysCsv);
+@endphp
+
+<ul>
+    @unless (count($categorys) == 0)
+        @foreach ($categorys as $category)
+            <li class="flex items-center justify-center bg-black text-white rounded-x1 py-1 px-3 mr-2 text-xs">
+                <a href='/?category={{$category}}'>
+                    {{$category}}
+                </a>
+            </li>
+        @endforeach
+
+        @else
+            <li class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs">
+                Нет категорий
+            </li>
+    @endunless
+</ul>

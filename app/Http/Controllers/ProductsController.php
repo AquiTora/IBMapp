@@ -50,6 +50,25 @@ class ProductsController extends Controller
 
         return redirect('/')->with('message', 'Товар успешно удален!');
     }
+
+    // Меню редактирования категорий
+    public function category(Products $products)
+    {
+        return view('products.category', [
+            'product' => $products
+        ]);
+    }
+
+    public function change(Request $request, Products $products)
+    {
+        $formFields = $request->validate([
+            'category' => 'required'
+        ]);
+
+        $products->update($formFields);
+
+        return back()->with('message', 'Категории обновлены');
+    }
     
     // Показывает форму для загрузки файла csv
     public function importForm()
