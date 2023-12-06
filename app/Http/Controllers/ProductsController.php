@@ -36,6 +36,11 @@ class ProductsController extends Controller
             'price' => 'required'
         ]);
 
+        if ($request->hasFile('logo'))
+        {
+            $formFields['path'] = $request->file('logo')->store('logos', 'public');
+        }
+
         Products::create($formFields);
 
         return redirect('/')->with('message', 'Товар успешно добавлен!');
