@@ -1,4 +1,5 @@
-<x-layout>    
+<x-layout>   
+    @auth 
     <div class="p-10 max-w-lg mx-auto mt-24">
         <a href="/" class="inline-block text-black ml-4 mb-4">
             <i class="fa-solid fa-arrow-left"></i> Назад
@@ -26,4 +27,9 @@
             </div>
         </form>
     </div>
+
+    @else
+        <a href="/">Вас здесь быть не должно</a>
+
+    @endauth
 </x-layout>

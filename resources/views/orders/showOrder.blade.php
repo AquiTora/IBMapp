@@ -6,15 +6,15 @@
                 <div class='bg-gray-50 border border-gray-200 rounded p-6'>
                     <div class="flex">
                         <div>
-                            <h2>
+                            <h3 class="text-2xl">
                                 Имя заказчика: {{$order->name}}
-                            </h2>
-                            <div>
+                            </h3>
+                            <div class="text-xl font-bold mb-4">
                                 Телефон: {{$order->phone}}
                             </div>
-                            <p>
+                            <div class="text-xl font-bold mb-4">
                                 Электронная почта: {{$order->email}}
-                            </p>
+                            </div>
                             <p>
                                 Имя товара: {{$order->product}}
                             </p>
@@ -32,9 +32,9 @@
     </div>
     
     @else
-        <h1>
+        <a href="/">
             Вас здесь быть не должно
-        </h1>
+        </a>
     
     @endauth
 </x-layout>
