@@ -95,9 +95,10 @@ class ProductsController extends Controller
             Products::create([
                 'article' => $data[0],
                 'name' => $data[1],
-                'discription' => $data[2],
-                'category' => $data[3],
-                'price' => $data[4]
+                'path' => $data[2],
+                'discription' => $data[3],
+                'category' => $data[4],
+                'price' => $data[5]
             ]);
         }
 
@@ -125,7 +126,7 @@ class ProductsController extends Controller
 
         foreach ($products as $product)
         {
-            fputcsv($handle, [$product->article, $product->name, $product->discription, $product->category, $product->price]);
+            fputcsv($handle, [$product->article, $product->name, $product->path, $product->discription, $product->category, $product->price]);
         }
 
         fclose($handle);

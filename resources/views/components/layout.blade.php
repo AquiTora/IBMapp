@@ -50,8 +50,20 @@
                 </li>
                 <li>
                     <a href="/showOrder" class="hover:text-laravel">
-                        <i class="fa-solid fa-user-plus"></i> 
+                        <i class="fa-solid fa-bars"></i> 
                         Просмотр заявок
+                    </a>
+                </li>
+                <li>
+                    <a href="/importForm" class="hover:text-laravel">
+                        <i class="fa-solid fa-upload"></i> 
+                        Импорт файлов
+                    </a>
+                </li>
+                <li>
+                    <a href="/exportForm" class="hover:text-laravel">
+                        <i class="fa-solid fa-download"></i> 
+                        Экспорт файлов
                     </a>
                 </li>
                 <li>
