@@ -1,5 +1,5 @@
 <x-layout>
-    @auth
+    {{-- @auth --}}
     <form action="/import" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="file" name="file" accept=".csv">
@@ -30,5 +30,5 @@
 
     @else
         <a href="/">Страница для сотрудников</a>
-    @endauth
+    {{-- @endauth --}}
 </x-layout>
