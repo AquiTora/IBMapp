@@ -3,6 +3,7 @@
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,10 +41,10 @@ Route::get('/category/{products}/edit', [ProductsController::class, 'category'])
 Route::put('/category/{products}', [ProductsController::class, 'change']);
 
 // Форма для импорта csv
-Route::get('/importForm', [ProductsController::class, 'importForm']);
+Route::get('/importForm', [ImportController::class, 'importForm']);
 
 // Импорт csv
-Route::post('/import', [ProductsController::class, 'import']);
+Route::post('/import', [ImportController::class, 'import']);
 
 // Форма для экспорта CSV
 Route::get('/exportForm', [ProductsController::class, 'exportForm']);
