@@ -4,6 +4,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,10 +48,10 @@ Route::get('/importForm', [ImportController::class, 'importForm']);
 Route::post('/import', [ImportController::class, 'import']);
 
 // Форма для экспорта CSV
-Route::get('/exportForm', [ProductsController::class, 'exportForm']);
+Route::get('/exportForm', [ExportController::class, 'exportForm']);
 
 // Экспорт CSV
-Route::get('/export', [ProductsController::class, 'export']);
+Route::get('/export', [ExportController::class, 'export']);
 
 // Показать форму заявки
 Route::get('/order/{product}', [OrdersController::class, 'create']);

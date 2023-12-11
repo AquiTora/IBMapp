@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\DB;
 class ImportController extends Controller
 {
     // Показывает форму для загрузки файла csv
-    public function importForm()
+    public function importForm(array $notInserts = [])
     {
-        return view('import');
+        return view('import', [
+            'notInserts' => $notInserts
+        ]);
     }
 
     // Загружает csv файл
     public function import(Request $request)
     {  
-        $notInsert = [];
+        $notInserts = [];
         $file = $request->file('file');
         $fileContents = file($file->getPathname());
         unset($fileContents[0]);
@@ -42,12 +44,10 @@ class ImportController extends Controller
             }
             else
             {
-                array_push($notInsert, $formFields);
+                array_push($notInserts, $formFields);
             }
         }
 
-        return view('import', [
-            'notInsert' => $notInsert
-        ]);
+        return ImportController::importForm($notInserts);
     }
 }

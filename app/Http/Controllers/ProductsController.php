@@ -64,6 +64,7 @@ class ProductsController extends Controller
         ]);
     }
 
+    // Редактирование категорий
     public function change(Request $request, Products $products)
     {
         $formFields = $request->validate([
@@ -73,64 +74,5 @@ class ProductsController extends Controller
         $products->update($formFields);
 
         return back()->with('message', 'Категории обновлены');
-    }
-    
-    // Показывает форму для загрузки файла csv
-    public function importForm()
-    {
-        return view('import');
-    }
-
-    // Загружает csv файл
-    public function import(Request $request)
-    {  
-        $file = $request->file('file');
-        $fileContents = file($file->getPathname());
-        unset($fileContents[0]);
-
-        foreach ($fileContents as $line)
-        {
-            $data = str_getcsv($line);
-
-            Products::create([
-                'article' => $data[0],
-                'name' => $data[1],
-                'path' => $data[2],
-                'discription' => $data[3],
-                'category' => $data[4],
-                'price' => $data[5]
-            ]);
-        }
-
-        return redirect('/')->with('success', 'CSV file imported successfully.');
-    }
-
-    // Показать форму для экспорта CSV
-    public function exportForm()
-    {
-        return view('export');
-    }
-
-    // Экспорт CSV
-    public function export()
-    {
-        $products = Products::all();
-        $csvFileName = 'products.csv';
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
-        ];
-
-        $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['article', 'name', 'discription', 'categoty', 'price']);
-
-        foreach ($products as $product)
-        {
-            fputcsv($handle, [$product->article, $product->name, $product->path, $product->discription, $product->category, $product->price]);
-        }
-
-        fclose($handle);
-
-        return Response::make('', 200, $headers);
     }
 }
