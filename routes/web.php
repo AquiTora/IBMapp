@@ -3,6 +3,7 @@
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,9 @@ Route::post('/addProd', [ProductsController::class, 'addProd']);
 
 // Удаление товара
 Route::delete('/{product}', [ProductsController::class, 'destroy']);
+
+// Просмотр категорий товаров
+Route::get('/categories', [CategoriesController::class, 'index']);
 
 // Форма редактирования категорий
 Route::get('/category/{products}/edit', [ProductsController::class, 'category']);

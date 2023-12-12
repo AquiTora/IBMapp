@@ -79,6 +79,10 @@
                 
                 @else
                 <li>
+                    <a href="/categories" class="hover:text-laravel">
+                        <i class="fa-solid fa-bars"></i>
+                        Категории
+                    </a>
                     <a href="/login" class="hover:text-laravel">
                         <i class="fa-solid fa-arrow-right-to-bracket"></i>
                         Войти
