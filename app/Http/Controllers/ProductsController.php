@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,8 @@ class ProductsController extends Controller
         return view('products.index', [
             'products' => Products::latest()
                 ->filter(request(['category']))
-                ->get()
+                ->get(),
+            'categories' => Categories::get()
         ]);
     }
 

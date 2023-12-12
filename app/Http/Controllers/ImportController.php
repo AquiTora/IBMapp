@@ -22,6 +22,7 @@ class ImportController extends Controller
     public function import(Request $request)
     {  
         $notInserts = [];
+        $lastId = 0;
         $file = $request->file('file');
         $fileContents = file($file->getPathname());
         unset($fileContents[0]);
@@ -42,11 +43,20 @@ class ImportController extends Controller
                 'name' => $data[4]
             ];
 
+            // Заполняем categories
+            if (!(DB::table('categories')->where('name', $data[4])->exists()))
+            {
+                $lastId = Categories::create($categoryFields)->id;            
+            }
+            else 
+            {
+                $lastId = DB::table('categories')->where('name', $data[4])->get()[0]->id;
+            }
+
+            // Заполняем products
             if (!(DB::table('products')->where('article', $data[0])->exists()))
             {
-                $lastId = Categories::create($categoryFields);
-
-                $formFields['category_id'] = $lastId->id;
+                $formFields['category_id'] = $lastId;
 
                 Products::create($formFields);
             }
