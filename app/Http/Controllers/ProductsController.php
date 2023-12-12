@@ -4,20 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use App\Models\Products;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class ProductsController extends Controller
 {
-    // Показывает все продукты
-    public function index()
+    // Отправляет все продукты
+    public function index(): JsonResponse
     {
-        return view('products.index', [
-            'products' => Products::latest()
-                ->filter(request(['category', 'search']))
-                ->get(),
-        ]);
+        $products = Products::all()->toArray();
+        $data = [];
+        
+        foreach ($products as $product)
+        {
+            $product['category_name'] = DB::table('categories')
+                ->where('id', '=', $product['category_id'])
+                ->get('name')[0]
+                ->name;
+
+            array_push($data, $product);
+        }
+
+        return response()->json($data);
     }
 
     // Показать меню добавления товара

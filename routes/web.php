@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
 // Показывает все продукты
-Route::get('/', [ProductsController::class, 'index']);
+// Route::get('/welcome', [ProductsController::class, 'index']);
 
 // Меню редактирования товаров
 Route::get('/add', [ProductsController::class, 'add']);
