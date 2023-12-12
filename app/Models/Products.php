@@ -18,11 +18,17 @@ class Products extends Model
         return $this->belongsTo('App\Categories');
     }
 
+    // Фильтр по тегам и поисковая строка
     public function scopeFilter($query, array $filters)
     {
         if ($filters['category'] ?? false)
         {
             $query->where('category', 'like', '%' . request('category') . '%');
+        }
+
+        if ($filters['search'] ?? false)
+        {
+            $query->where('name', 'like', '%' . request('search') . '%');
         }
     }
 }

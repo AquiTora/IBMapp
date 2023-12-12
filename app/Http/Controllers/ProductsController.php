@@ -15,9 +15,8 @@ class ProductsController extends Controller
     {
         return view('products.index', [
             'products' => Products::latest()
-                ->filter(request(['category']))
+                ->filter(request(['category', 'search']))
                 ->get(),
-            'categories' => Categories::get()
         ]);
     }
 
