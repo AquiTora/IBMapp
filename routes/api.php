@@ -16,10 +16,19 @@ use App\Http\Controllers\ProductsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-// Отправляет все продукты
-// (неочень нравится как выглядит, но пусть пока остается)
-Route::resource('products', ProductsController::class);
+// Группа роутов для манипуляций с продуктами
+Route::group([
+    'prefix' => 'products'
+], function ($router) {
+    // Отправляет все продукты
+    Route::get('/', [ProductsController::class, 'index']);
+    // Ищет продукты по названию
+    Route::get('/search', [ProductsController::class, 'search']);
+    // Отображает данные постранично
+    Route::get('/page', [ProductsController::class, 'showPage']);
+    
+});

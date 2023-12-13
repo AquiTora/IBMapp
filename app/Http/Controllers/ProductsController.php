@@ -15,9 +15,47 @@ class ProductsController extends Controller
     // Отправляет все продукты
     public function index(): JsonResponse
     {
-        $products = Products::all()->toArray();
-        $data = [];
+        $products = Products::take(4)->get();
+        $data = $this->takeCategory($products);
         
+        return response()->json($data);
+    }
+
+    // Тестовый вариант поиска
+    public function search(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['nullable']
+        ]);
+
+        $name = $validatedData['name'];
+
+        $products = Products::where('name', 'like', "%{$name}%")->get();
+
+        $data = $this->takeCategory($products);
+
+        return response()->json($data);
+    }
+
+    // Тестовая пагинация для наших продуктов
+    public function showPage(Request $request)
+    {
+        $page = $request->validate([
+            'page' => 'required',
+        ])['page'];
+
+        $products = Products::skip(($page - 1) * 4)->take(4)->get();
+
+        $data = $this->takeCategory($products);
+
+        return response()->json($data);;
+    }
+
+    // Прикрепляет категории к продуктам
+    public function takeCategory($products)
+    {
+        $data = [];
+
         foreach ($products as $product)
         {
             $product['category_name'] = DB::table('categories')
@@ -28,8 +66,21 @@ class ProductsController extends Controller
             array_push($data, $product);
         }
 
-        return response()->json($data);
+        return $data;
     }
+
+    
+
+
+
+
+
+
+
+    // Ниже идут старые функции
+    // которые использовались для тестового варианта
+    // с использованием только laravel
+    // без отдельного фронтенда
 
     // Показать меню добавления товара
     public function add()
