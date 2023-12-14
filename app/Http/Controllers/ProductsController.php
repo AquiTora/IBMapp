@@ -13,12 +13,22 @@ use PhpOffice\PhpSpreadsheet\Calculation\Category;
 class ProductsController extends Controller
 {
     // Отправляет все продукты
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $products = Products::take(4)->get();
-        $data = $this->takeCategory($products);
+        $page = $request->validate([
+            'page' => 'nullable'
+        ])['page'];
         
-        return response()->json($data);
+        $itemsPerPage = 4;
+        $offset = ($page - 1) * 4;
+
+        $products = Products::skip($offset)->take($itemsPerPage)->get();
+
+        $data = $this->takeCategory($products);
+
+        $totalItems = Products::count();
+        
+        return response()->json(['products' => $data, 'total' => $totalItems]);
     }
 
     // Тестовый вариант поиска
@@ -30,7 +40,9 @@ class ProductsController extends Controller
 
         $name = $validatedData['name'];
 
-        $products = Products::where('name', 'like', "%{$name}%")->get();
+        $itemsPerPage = 4;
+
+        $products = Products::where('name', 'like', "%{$name}%")->take($itemsPerPage)->get();
 
         $data = $this->takeCategory($products);
 
@@ -41,8 +53,13 @@ class ProductsController extends Controller
     public function showPage(Request $request)
     {
         $page = $request->validate([
-            'page' => 'required',
+            'page' => 'nullable',
         ])['page'];
+
+        if ($page == NULL) 
+        {
+            $page = 1;
+        }
 
         $products = Products::skip(($page - 1) * 4)->take(4)->get();
 
