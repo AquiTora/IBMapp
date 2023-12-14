@@ -19,8 +19,8 @@ class ProductsController extends Controller
             'page' => 'nullable'
         ])['page'];
         
-        $itemsPerPage = 4;
-        $offset = ($page - 1) * 4;
+        $itemsPerPage = 6;
+        $offset = ($page - 1) * $itemsPerPage;
 
         $products = Products::skip($offset)->take($itemsPerPage)->get();
 
