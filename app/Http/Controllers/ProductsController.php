@@ -12,23 +12,17 @@ use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class ProductsController extends Controller
 {
+    // Определяет сколько товаров будет выводиться на одной странице
+    private $itemsPerPage = 6;
+
     // Отправляет все продукты
     public function index(Request $request): JsonResponse
     {
-        $page = $request->validate([
-            'page' => 'nullable'
-        ])['page'];
+        $page = $request->page;
+
+        $data = $this->takePageProducts($page);
         
-        $itemsPerPage = 6;
-        $offset = ($page - 1) * $itemsPerPage;
-
-        $products = Products::skip($offset)->take($itemsPerPage)->get();
-
-        $data = $this->takeCategory($products);
-
-        $totalItems = Products::count();
-        
-        return response()->json(['products' => $data, 'total' => $totalItems]);
+        return response()->json(['products' => $data['products'], 'total' => $data['totalItems']]);
     }
 
     // Тестовый вариант поиска
@@ -40,9 +34,7 @@ class ProductsController extends Controller
 
         $name = $validatedData['name'];
 
-        $itemsPerPage = 4;
-
-        $products = Products::where('name', 'like', "%{$name}%")->take($itemsPerPage)->get();
+        $products = Products::where('name', 'like', "%{$name}%")->take($this->itemsPerPage)->get();
 
         $data = $this->takeCategory($products);
 
@@ -54,11 +46,36 @@ class ProductsController extends Controller
     {
         $deleteStatus = Products::where('id', '=', $request->id)->delete();
 
-        return response()->json(['status' => $deleteStatus, 'deleteItem' => $request->name]);
+        $data = $this->takePageProducts($request->page);
+
+        return response()->json([
+            'status' => $deleteStatus, 
+            'deleteItem' => $request->name,
+            'products' => $data['products']
+        ]);
+    }
+
+    // Берет товары на страницу
+    private function takePageProducts($page)
+    {
+        $offset = ($page - 1) * $this->itemsPerPage;
+
+        $takeProducts = Products::skip($offset)->take($this->itemsPerPage)->get();
+
+        $products = $this->takeCategory($takeProducts);
+
+        $totalItems = Products::count();
+
+        $data = [
+            'products' => $products,
+            'totalItems' => $totalItems
+        ];
+
+        return $data;
     }
 
     // Прикрепляет категории к продуктам
-    public function takeCategory($products)
+    private function takeCategory($products)
     {
         $data = [];
 
