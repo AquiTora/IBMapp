@@ -49,23 +49,12 @@ class ProductsController extends Controller
         return response()->json($data);
     }
 
-    // Тестовая пагинация для наших продуктов
-    public function showPage(Request $request)
+    // Удаление товара по нажатию на кнопку
+    public function delete(Request $request)
     {
-        $page = $request->validate([
-            'page' => 'nullable',
-        ])['page'];
+        $deleteStatus = Products::where('id', '=', $request->id)->delete();
 
-        if ($page == NULL) 
-        {
-            $page = 1;
-        }
-
-        $products = Products::skip(($page - 1) * 4)->take(4)->get();
-
-        $data = $this->takeCategory($products);
-
-        return response()->json($data);;
+        return response()->json(['status' => $deleteStatus, 'deleteItem' => $request->name]);
     }
 
     // Прикрепляет категории к продуктам
@@ -126,7 +115,7 @@ class ProductsController extends Controller
         return redirect('/')->with('message', 'Товар успешно добавлен!');
     }
 
-    // Удаление товара
+    // Удаление товара 
     public function destroy(Request $request)
     {
         $deleteItem = $request->product;

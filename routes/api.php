@@ -28,7 +28,6 @@ Route::group([
     Route::get('/', [ProductsController::class, 'index']);
     // Ищет продукты по названию
     Route::get('/search', [ProductsController::class, 'search']);
-    // Отображает данные постранично
-    Route::get('/page', [ProductsController::class, 'showPage']);
-    
+    // Удаляет продукты по нажатию на кнопочку
+    Route::delete('/delete', [ProductsController::class, 'delete']);
 });
